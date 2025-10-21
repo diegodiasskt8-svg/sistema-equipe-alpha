@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Equipe Alpha - Sistema de Gestão Logística</title>
-    <!-- Tailwind CSS CDN atualizado -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -511,14 +510,16 @@
     </div>
 
     <script>
-const firebaseConfig = {
-    apiKey: "AIzaSyA_7LKUqBbTejm2kJBmGAp0AMwZeWbf8mQ",
-    authDomain: "equipe-alpha-7b45f.firebaseapp.com",
-    projectId: "equipe-alpha-7b45f",
-    storageBucket: "equipe-alpha-7b45f.firebasestorage.app",
-    messagingSenderId: "991254673645",
-    appId: "1:991254673645:web:e5ee26bd2ccc290f8734e4"
-};
+        // 🔥 CONFIGURAÇÕES DO SEU FIREBASE - CORRETAS!
+        const firebaseConfig = {
+            apiKey: "AIzaSyA_7LKUqBbTejm2kJBmGAp0AMwZeWbf8mQ",
+            authDomain: "equipe-alpha-7b45f.firebaseapp.com",
+            projectId: "equipe-alpha-7b45f",
+            storageBucket: "equipe-alpha-7b45f.firebasestorage.app",
+            messagingSenderId: "991254673645",
+            appId: "1:991254673645:web:e5ee26bd2ccc290f8734e4"
+        };
+
         // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
@@ -579,14 +580,24 @@ const firebaseConfig = {
                     document.getElementById('auth-screen').classList.add('hidden');
                     document.getElementById('app').classList.remove('hidden');
                     
-                    // Simular dados do usuário para teste
-                    currentUserData = {
-                        name: email.split('@')[0],
-                        role: 'Usuário',
-                        isAdmin: false,
-                        avatar: email.charAt(0).toUpperCase()
-                    };
-                    
+                    // Buscar dados do usuário no Firestore
+                    return db.collection('users').doc(currentUser.uid).get();
+                })
+                .then((doc) => {
+                    if (doc.exists) {
+                        currentUserData = doc.data();
+                    } else {
+                        // Criar dados do usuário se não existir
+                        currentUserData = {
+                            name: currentUser.email.split('@')[0],
+                            role: 'Usuário',
+                            isAdmin: false,
+                            avatar: currentUser.email.charAt(0).toUpperCase()
+                        };
+                        return db.collection('users').doc(currentUser.uid).set(currentUserData);
+                    }
+                })
+                .then(() => {
                     initializeApp();
                 })
                 .catch((error) => {
@@ -598,7 +609,10 @@ const firebaseConfig = {
         function handleRegister(event) {
             event.preventDefault();
             
+            const name = document.getElementById('register-name').value;
             const email = document.getElementById('register-email').value;
+            const birthdate = document.getElementById('register-birthdate').value;
+            const role = document.getElementById('register-role').value;
             const password = document.getElementById('register-password').value;
             const confirmPassword = document.getElementById('register-confirm-password').value;
             
@@ -609,6 +623,21 @@ const firebaseConfig = {
             
             auth.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
+                    const user = userCredential.user;
+                    
+                    // Salvar dados adicionais no Firestore
+                    return db.collection('users').doc(user.uid).set({
+                        name: name,
+                        email: email,
+                        role: role,
+                        birthdate: birthdate,
+                        isAdmin: false,
+                        online: true,
+                        avatar: name.charAt(0).toUpperCase(),
+                        createdAt: new Date().toISOString()
+                    });
+                })
+                .then(() => {
                     showNotification('Conta criada com sucesso! Faça login.', 'success');
                     showLoginForm();
                 })
@@ -620,10 +649,26 @@ const firebaseConfig = {
 
         function handleForgotPassword(event) {
             event.preventDefault();
-            showNotification('Funcionalidade em desenvolvimento!', 'info');
+            
+            const email = document.getElementById('forgot-email').value;
+            
+            auth.sendPasswordResetEmail(email)
+                .then(() => {
+                    showNotification('Email de recuperação enviado!', 'success');
+                    showLoginForm();
+                })
+                .catch((error) => {
+                    showNotification('Erro ao enviar email: ' + error.message, 'error');
+                });
         }
 
         function logout() {
+            if (currentUser) {
+                db.collection('users').doc(currentUser.uid).update({
+                    online: false
+                });
+            }
+            
             auth.signOut().then(() => {
                 currentUser = null;
                 currentUserData = null;
@@ -693,14 +738,58 @@ const firebaseConfig = {
 
         function createTask(event) {
             event.preventDefault();
-            showNotification('Tarefa criada com sucesso! (Modo demonstração)', 'success');
-            closeCreateTaskModal();
+            
+            const task = {
+                title: document.getElementById('task-title').value,
+                description: document.getElementById('task-description').value,
+                sector: document.getElementById('task-sector').value,
+                priority: document.getElementById('task-priority').value,
+                indicator: document.getElementById('task-indicator').value,
+                deadline: document.getElementById('task-deadline').value,
+                status: 'Pendente',
+                type: 'completa',
+                createdBy: currentUser.uid,
+                createdByName: currentUserData.name,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            db.collection('tasks').add(task)
+                .then(() => {
+                    showNotification('Tarefa criada com sucesso!', 'success');
+                    closeCreateTaskModal();
+                })
+                .catch((error) => {
+                    showNotification('Erro ao criar tarefa: ' + error.message, 'error');
+                });
         }
 
         function createQuickTask(event) {
             event.preventDefault();
-            showNotification('Tarefa rápida criada! (Modo demonstração)', 'success');
-            closeQuickTaskModal();
+            
+            const task = {
+                title: document.getElementById('quick-task-title').value,
+                description: '',
+                sector: 'Rápida',
+                priority: document.getElementById('quick-task-priority').value,
+                indicator: 'Não se enquadra',
+                deadline: '',
+                status: 'Pendente',
+                type: 'rapida',
+                createdBy: currentUser.uid,
+                createdByName: currentUserData.name,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            db.collection('tasks').add(task)
+                .then(() => {
+                    showNotification('Tarefa rápida criada!', 'success');
+                    closeQuickTaskModal();
+                })
+                .catch((error) => {
+                    showNotification('Erro ao criar tarefa: ' + error.message, 'error');
+                });
         }
 
         function filterTasks(sector) {
@@ -724,20 +813,19 @@ const firebaseConfig = {
         auth.onAuthStateChanged((user) => {
             if (user) {
                 currentUser = user;
-                showNotification('Login automático realizado!', 'success');
                 
-                document.getElementById('auth-screen').classList.add('hidden');
-                document.getElementById('app').classList.remove('hidden');
-                
-                // Dados simulados
-                currentUserData = {
-                    name: user.email.split('@')[0],
-                    role: 'Usuário',
-                    isAdmin: false,
-                    avatar: user.email.charAt(0).toUpperCase()
-                };
-                
-                initializeApp();
+                // Buscar dados do usuário
+                db.collection('users').doc(user.uid).get()
+                    .then((doc) => {
+                        if (doc.exists) {
+                            currentUserData = doc.data();
+                            
+                            document.getElementById('auth-screen').classList.add('hidden');
+                            document.getElementById('app').classList.remove('hidden');
+                            initializeApp();
+                            showNotification('Login automático realizado!', 'success');
+                        }
+                    });
             }
         });
 
@@ -746,8 +834,7 @@ const firebaseConfig = {
             showLoginForm();
         });
 
-        // Teste do Firebase
-        console.log('Firebase config:', firebaseConfig);
+        console.log('Sistema Equipe Alpha - Configurações carregadas!');
     </script>
 </body>
 </html>
