@@ -4,76 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Equipe Alpha - Sistema de Gestão Logística</title>
+    <!-- Tailwind CSS CDN atualizado -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <style>
-        body {
-            box-sizing: border-box;
-        }
-        .gradient-bg {
-            background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
-        }
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            padding: 16px 24px;
-            border-radius: 12px;
-            font-weight: 500;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            animation: slideInRight 0.3s ease-out;
-        }
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        .sidebar-nav {
-            transition: all 0.2s ease;
-        }
-        .sidebar-nav:hover {
-            background: rgba(59, 130, 246, 0.1);
-            transform: translateX(4px);
-        }
-        .sidebar-nav.active {
-            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
-            color: white;
-            transform: translateX(8px);
-        }
-        .task-priority-urgent {
-            border-left: 4px solid #ef4444;
-            background: linear-gradient(90deg, rgba(239, 68, 68, 0.1) 0%, transparent 100%);
-        }
-        .task-priority-high {
-            border-left: 4px solid #f97316;
-            background: linear-gradient(90deg, rgba(249, 115, 22, 0.1) 0%, transparent 100%);
-        }
-        .task-priority-medium {
-            border-left: 4px solid #eab308;
-            background: linear-gradient(90deg, rgba(234, 179, 8, 0.1) 0%, transparent 100%);
-        }
-        .task-priority-low {
-            border-left: 4px solid #22c55e;
-            background: linear-gradient(90deg, rgba(34, 197, 94, 0.1) 0%, transparent 100%);
-        }
-        .chat-container {
-            max-height: 400px;
-            overflow-y: auto;
-            scroll-behavior: smooth;
-        }
-        .modal-overlay {
-            backdrop-filter: blur(4px);
-        }
+        body { box-sizing: border-box; }
+        .gradient-bg { background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .notification { position: fixed; top: 20px; right: 20px; z-index: 1000; padding: 16px 24px; border-radius: 12px; font-weight: 500; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); animation: slideInRight 0.3s ease-out; }
+        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .sidebar-nav { transition: all 0.2s ease; }
+        .sidebar-nav:hover { background: rgba(59, 130, 246, 0.1); transform: translateX(4px); }
+        .sidebar-nav.active { background: linear-gradient(90deg, #3b82f6, #1d4ed8); color: white; transform: translateX(8px); }
+        .task-priority-urgent { border-left: 4px solid #ef4444; background: linear-gradient(90deg, rgba(239, 68, 68, 0.1) 0%, transparent 100%); }
+        .task-priority-high { border-left: 4px solid #f97316; background: linear-gradient(90deg, rgba(249, 115, 22, 0.1) 0%, transparent 100%); }
+        .task-priority-medium { border-left: 4px solid #eab308; background: linear-gradient(90deg, rgba(234, 179, 8, 0.1) 0%, transparent 100%); }
+        .task-priority-low { border-left: 4px solid #22c55e; background: linear-gradient(90deg, rgba(34, 197, 94, 0.1) 0%, transparent 100%); }
+        .chat-container { max-height: 400px; overflow-y: auto; scroll-behavior: smooth; }
+        .modal-overlay { backdrop-filter: blur(4px); }
     </style>
 </head>
 <body class="h-full bg-gray-50 dark:bg-gray-900">
@@ -559,45 +511,14 @@
     </div>
 
     <script>
-        const firebaseConfig = {
-    apiKey: "AIzaSyABCDEfghIJKLMNOPQRSTUVWXYZ123456",
-    authDomain: "equipe-alpha-logistica.firebaseapp.com",
-    projectId: "equipe-alpha-logistica",  // ⚠️ IMPORTANTE: só o nome, sem .firebaseapp.com
-    storageBucket: "equipe-alpha-logistica.appspot.com",
-    messagingSenderId: "123456789012",
-    appId: "1:123456789012:web:abcdef123456789"
+const firebaseConfig = {
+    apiKey: "AIzaSyA_7LKUqBbTejm2kJBmGAp0AMwZeWbf8mQ",
+    authDomain: "equipe-alpha-7b45f.firebaseapp.com",
+    projectId: "equipe-alpha-7b45f",
+    storageBucket: "equipe-alpha-7b45f.firebasestorage.app",
+    messagingSenderId: "991254673645",
+    appId: "1:991254673645:web:e5ee26bd2ccc290f8734e4"
 };
-        // Função para criar usuário admin inicial
-function createInitialAdmin() {
-    const adminEmail = 'Diegodiasskt8@gmail.com';
-    const adminPassword = '20080305Dp@';
-    
-    auth.createUserWithEmailAndPassword(adminEmail, adminPassword)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            
-            // Criar dados de admin no Firestore
-            return db.collection('users').doc(user.uid).set({
-                name: 'Administrador',
-                email: adminEmail,
-                role: 'Gerente de Logística',
-                isAdmin: true,
-                online: true,
-                avatar: 'A',
-                createdAt: new Date().toISOString(),
-                lastLogin: new Date().toISOString()
-            });
-        })
-        .then(() => {
-            console.log('Admin criado com sucesso!');
-        })
-        .catch((error) => {
-            console.log('Admin já existe ou erro:', error);
-        });
-}
-
-// Chamar esta função uma vez se precisar criar o admin
-// createInitialAdmin();
         // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
@@ -623,10 +544,6 @@ function createInitialAdmin() {
             document.body.appendChild(notification);
             
             setTimeout(() => notification.remove(), 4000);
-        }
-
-        function generateId() {
-            return 'id_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         }
 
         // Authentication Functions
@@ -657,53 +574,31 @@ function createInitialAdmin() {
             auth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     currentUser = userCredential.user;
+                    showNotification('Login realizado com sucesso!', 'success');
                     
-                    // Buscar dados adicionais do usuário
-                    return db.collection('users').doc(currentUser.uid).get();
-                })
-                .then((doc) => {
-                    if (doc.exists) {
-                        currentUserData = doc.data();
-                        
-                        // Atualizar status online
-                        return db.collection('users').doc(currentUser.uid).update({
-                            online: true,
-                            lastLogin: new Date().toISOString()
-                        });
-                    } else {
-                        // Criar dados do usuário se não existir
-                        currentUserData = {
-                            name: currentUser.email.split('@')[0],
-                            role: 'Usuário',
-                            isAdmin: false,
-                            online: true,
-                            avatar: currentUser.email.charAt(0).toUpperCase(),
-                            createdAt: new Date().toISOString()
-                        };
-                        
-                        return db.collection('users').doc(currentUser.uid).set(currentUserData);
-                    }
-                })
-                .then(() => {
                     document.getElementById('auth-screen').classList.add('hidden');
                     document.getElementById('app').classList.remove('hidden');
                     
+                    // Simular dados do usuário para teste
+                    currentUserData = {
+                        name: email.split('@')[0],
+                        role: 'Usuário',
+                        isAdmin: false,
+                        avatar: email.charAt(0).toUpperCase()
+                    };
+                    
                     initializeApp();
-                    showNotification(`Bem-vindo, ${currentUserData.name}!`, 'success');
                 })
                 .catch((error) => {
-                    showNotification('Email ou senha incorretos!', 'error');
-                    console.error(error);
+                    showNotification('Erro no login: ' + error.message, 'error');
+                    console.error('Login error:', error);
                 });
         }
 
         function handleRegister(event) {
             event.preventDefault();
             
-            const name = document.getElementById('register-name').value;
             const email = document.getElementById('register-email').value;
-            const birthdate = document.getElementById('register-birthdate').value;
-            const role = document.getElementById('register-role').value;
             const password = document.getElementById('register-password').value;
             const confirmPassword = document.getElementById('register-confirm-password').value;
             
@@ -714,62 +609,28 @@ function createInitialAdmin() {
             
             auth.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    const user = userCredential.user;
-                    
-                    // Salvar dados adicionais no Firestore
-                    return db.collection('users').doc(user.uid).set({
-                        name: name,
-                        email: email,
-                        role: role,
-                        birthdate: birthdate,
-                        isAdmin: false,
-                        online: true,
-                        avatar: name.charAt(0).toUpperCase(),
-                        createdAt: new Date().toISOString(),
-                        lastLogin: new Date().toISOString()
-                    });
-                })
-                .then(() => {
-                    showNotification('Conta criada com sucesso!', 'success');
+                    showNotification('Conta criada com sucesso! Faça login.', 'success');
                     showLoginForm();
                 })
                 .catch((error) => {
                     showNotification('Erro ao criar conta: ' + error.message, 'error');
-                    console.error(error);
+                    console.error('Register error:', error);
                 });
         }
 
         function handleForgotPassword(event) {
             event.preventDefault();
-            
-            const email = document.getElementById('forgot-email').value;
-            
-            auth.sendPasswordResetEmail(email)
-                .then(() => {
-                    showNotification('Email de recuperação enviado!', 'success');
-                    showLoginForm();
-                })
-                .catch((error) => {
-                    showNotification('Erro ao enviar email: ' + error.message, 'error');
-                });
+            showNotification('Funcionalidade em desenvolvimento!', 'info');
         }
 
         function logout() {
-            if (currentUser) {
-                // Atualizar status offline
-                db.collection('users').doc(currentUser.uid).update({
-                    online: false,
-                    lastLogout: new Date().toISOString()
-                });
-            }
-            
             auth.signOut().then(() => {
                 currentUser = null;
                 currentUserData = null;
                 
                 document.getElementById('auth-screen').classList.remove('hidden');
                 document.getElementById('app').classList.add('hidden');
-                showNotification('Logout realizado com sucesso!', 'success');
+                showNotification('Logout realizado!', 'success');
             });
         }
 
@@ -777,18 +638,13 @@ function createInitialAdmin() {
         function toggleTheme() {
             const html = document.documentElement;
             const themeIcon = document.getElementById('theme-icon');
-            const themeToggle = document.getElementById('theme-toggle');
             
             if (html.classList.contains('dark')) {
                 html.classList.remove('dark');
                 themeIcon.textContent = '🌙';
-                if (themeToggle) themeToggle.textContent = 'Desativado';
-                isDarkMode = false;
             } else {
                 html.classList.add('dark');
                 themeIcon.textContent = '☀️';
-                if (themeToggle) themeToggle.textContent = 'Ativado';
-                isDarkMode = true;
             }
         }
 
@@ -802,10 +658,8 @@ function createInitialAdmin() {
             
             document.querySelectorAll('.sidebar-nav').forEach(nav => {
                 nav.classList.remove('active');
-                nav.classList.add('text-gray-700', 'dark:text-gray-300');
             });
             event.target.classList.add('active');
-            event.target.classList.remove('text-gray-700', 'dark:text-gray-300');
             
             const titles = {
                 dashboard: { title: 'Dashboard', subtitle: 'Visão geral do sistema' },
@@ -818,514 +672,82 @@ function createInitialAdmin() {
             const pageInfo = titles[sectionName];
             document.getElementById('page-title').textContent = pageInfo.title;
             document.getElementById('page-subtitle').textContent = pageInfo.subtitle;
-            
-            if (sectionName === 'dashboard') setupDashboardListener();
-            if (sectionName === 'tasks') setupTasksListener();
-            if (sectionName === 'team') setupTeamListener();
-            if (sectionName === 'chat') setupChatListener();
         }
 
         // Task Management
         function showCreateTaskModal() {
             document.getElementById('create-task-modal').classList.remove('hidden');
-            document.getElementById('create-task-modal').classList.add('flex');
         }
 
         function closeCreateTaskModal() {
             document.getElementById('create-task-modal').classList.add('hidden');
-            document.getElementById('create-task-modal').classList.remove('flex');
-            document.getElementById('create-task-modal').querySelector('form').reset();
         }
 
         function showQuickTaskModal() {
             document.getElementById('quick-task-modal').classList.remove('hidden');
-            document.getElementById('quick-task-modal').classList.add('flex');
         }
 
         function closeQuickTaskModal() {
             document.getElementById('quick-task-modal').classList.add('hidden');
-            document.getElementById('quick-task-modal').classList.remove('flex');
-            document.getElementById('quick-task-modal').querySelector('form').reset();
         }
 
         function createTask(event) {
             event.preventDefault();
-            
-            const task = {
-                title: document.getElementById('task-title').value,
-                description: document.getElementById('task-description').value,
-                sector: document.getElementById('task-sector').value,
-                priority: document.getElementById('task-priority').value,
-                indicator: document.getElementById('task-indicator').value,
-                deadline: document.getElementById('task-deadline').value,
-                status: 'Pendente',
-                type: 'completa',
-                createdBy: currentUser.uid,
-                createdByName: currentUserData.name,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString()
-            };
-            
-            db.collection('tasks').add(task)
-                .then(() => {
-                    closeCreateTaskModal();
-                    showNotification('Tarefa criada com sucesso!', 'success');
-                })
-                .catch((error) => {
-                    showNotification('Erro ao criar tarefa: ' + error.message, 'error');
-                });
+            showNotification('Tarefa criada com sucesso! (Modo demonstração)', 'success');
+            closeCreateTaskModal();
         }
 
         function createQuickTask(event) {
             event.preventDefault();
-            
-            const task = {
-                title: document.getElementById('quick-task-title').value,
-                description: '',
-                sector: 'Rápida',
-                priority: document.getElementById('quick-task-priority').value,
-                indicator: 'Não se enquadra',
-                deadline: '',
-                status: 'Pendente',
-                type: 'rapida',
-                createdBy: currentUser.uid,
-                createdByName: currentUserData.name,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString()
-            };
-            
-            db.collection('tasks').add(task)
-                .then(() => {
-                    closeQuickTaskModal();
-                    showNotification('Tarefa rápida criada!', 'success');
-                })
-                .catch((error) => {
-                    showNotification('Erro ao criar tarefa: ' + error.message, 'error');
-                });
-        }
-
-        function setupTasksListener() {
-            db.collection('tasks')
-                .orderBy('createdAt', 'desc')
-                .onSnapshot((snapshot) => {
-                    const tasks = [];
-                    snapshot.forEach((doc) => {
-                        tasks.push({ id: doc.id, ...doc.data() });
-                    });
-                    loadTasks(tasks);
-                });
-        }
-
-        function loadTasks(tasks) {
-            const container = document.getElementById('tasks-container');
-            container.innerHTML = '';
-            
-            if (tasks.length === 0) {
-                container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-8 col-span-3">Nenhuma tarefa encontrada</p>';
-                return;
-            }
-            
-            tasks.forEach(task => {
-                const priorityClasses = {
-                    'Urgente': 'task-priority-urgent',
-                    'Alta': 'task-priority-high',
-                    'Média': 'task-priority-medium',
-                    'Baixa': 'task-priority-low'
-                };
-                
-                const statusColors = {
-                    'Pendente': 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200',
-                    'Em andamento': 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200',
-                    'Concluída': 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
-                };
-                
-                const priorityColors = {
-                    'Urgente': 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200',
-                    'Alta': 'bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200',
-                    'Média': 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200',
-                    'Baixa': 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
-                };
-                
-                const isQuickTask = task.type === 'rapida';
-                const taskIcon = isQuickTask ? '⚡' : getSectorIcon(task.sector);
-                
-                container.innerHTML += `
-                    <div class="card-hover bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg ${priorityClasses[task.priority]}" data-sector="${task.sector}">
-                        <div class="flex justify-between items-start mb-4">
-                            <h4 class="text-lg font-bold text-gray-900 dark:text-white">${taskIcon} ${task.title}</h4>
-                            ${currentUserData.isAdmin ? `<button onclick="deleteTask('${task.id}')" class="text-red-500 hover:text-red-700 transition-colors">🗑️</button>` : ''}
-                        </div>
-                        
-                        ${task.description ? `<p class="text-gray-600 dark:text-gray-400 mb-4">${task.description}</p>` : ''}
-                        
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-3 py-1 rounded-full text-xs font-medium ${statusColors[task.status]}">${task.status}</span>
-                            <span class="px-3 py-1 rounded-full text-xs font-medium ${priorityColors[task.priority]}">${task.priority}</span>
-                            ${!isQuickTask ? `<span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">${task.sector}</span>` : ''}
-                            ${task.indicator !== 'Não se enquadra' ? `<span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">${task.indicator}</span>` : ''}
-                        </div>
-                        
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500 dark:text-gray-400">Por: ${task.createdByName}</span>
-                            <select onchange="changeTaskStatus('${task.id}', this.value)" class="text-sm p-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                                <option value="Pendente" ${task.status === 'Pendente' ? 'selected' : ''}>Pendente</option>
-                                <option value="Em andamento" ${task.status === 'Em andamento' ? 'selected' : ''}>Em andamento</option>
-                                <option value="Concluída" ${task.status === 'Concluída' ? 'selected' : ''}>Concluída</option>
-                            </select>
-                        </div>
-                        
-                        ${task.deadline ? `<div class="mt-3 text-sm text-gray-500 dark:text-gray-400">📅 ${new Date(task.deadline).toLocaleString()}</div>` : ''}
-                    </div>
-                `;
-            });
-        }
-
-        function getSectorIcon(sector) {
-            const icons = {
-                'Público': '🏛️',
-                'Privado': '🏢',
-                'Apoio': '🤝',
-                'Insumo': '📦',
-                'Mista': '🔄',
-                'Dedicada': '🎯',
-                'Rápida': '⚡'
-            };
-            return icons[sector] || '📋';
-        }
-
-        function changeTaskStatus(taskId, newStatus) {
-            db.collection('tasks').doc(taskId).update({
-                status: newStatus,
-                updatedAt: new Date().toISOString()
-            })
-            .then(() => {
-                showNotification('Status atualizado!', 'success');
-            })
-            .catch((error) => {
-                showNotification('Erro ao atualizar status: ' + error.message, 'error');
-            });
-        }
-
-        function deleteTask(taskId) {
-            if (!currentUserData.isAdmin) {
-                showNotification('Apenas administradores podem excluir tarefas!', 'error');
-                return;
-            }
-            
-            db.collection('tasks').doc(taskId).delete()
-                .then(() => {
-                    showNotification('Tarefa excluída!', 'success');
-                })
-                .catch((error) => {
-                    showNotification('Erro ao excluir tarefa: ' + error.message, 'error');
-                });
+            showNotification('Tarefa rápida criada! (Modo demonstração)', 'success');
+            closeQuickTaskModal();
         }
 
         function filterTasks(sector) {
-            const taskCards = document.querySelectorAll('[data-sector]');
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            
-            filterBtns.forEach(btn => {
-                btn.classList.remove('active', 'bg-blue-600', 'text-white');
-                btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
-            });
-            event.target.classList.add('active', 'bg-blue-600', 'text-white');
-            event.target.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
-            
-            taskCards.forEach(card => {
-                if (sector === 'all' || card.dataset.sector === sector) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        // Dashboard Functions
-        function setupDashboardListener() {
-            db.collection('tasks').onSnapshot((snapshot) => {
-                const tasks = [];
-                snapshot.forEach((doc) => {
-                    tasks.push(doc.data());
-                });
-                updateDashboard(tasks);
-            });
-            
-            db.collection('users').where('online', '==', true).onSnapshot((snapshot) => {
-                document.getElementById('team-online').textContent = snapshot.size;
-            });
-        }
-
-        function updateDashboard(tasks) {
-            const activeTasks = tasks.filter(task => task.status !== 'Concluída').length;
-            const completedTasks = tasks.filter(task => task.status === 'Concluída').length;
-            const inProgressTasks = tasks.filter(task => task.status === 'Em andamento').length;
-            
-            document.getElementById('active-tasks').textContent = activeTasks;
-            document.getElementById('completed-tasks').textContent = completedTasks;
-            document.getElementById('in-progress-tasks').textContent = inProgressTasks;
-            
-            updateSectorsChart(tasks);
-            updateRecentActivity(tasks);
-        }
-
-        function updateSectorsChart(tasks) {
-            const container = document.getElementById('sectors-chart');
-            const sectors = ['Público', 'Privado', 'Apoio', 'Insumo', 'Mista', 'Dedicada', 'Rápida'];
-            
-            container.innerHTML = '';
-            
-            sectors.forEach(sector => {
-                const count = tasks.filter(task => task.sector === sector).length;
-                const percentage = tasks.length > 0 ? (count / tasks.length * 100).toFixed(1) : 0;
-                
-                container.innerHTML += `
-                    <div class="flex items-center justify-between">
-                        <span class="text-gray-700 dark:text-gray-300">${getSectorIcon(sector)} ${sector}</span>
-                        <div class="flex items-center space-x-3">
-                            <div class="w-24 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                <div class="bg-blue-600 h-2 rounded-full" style="width: ${percentage}%"></div>
-                            </div>
-                            <span class="text-sm font-medium text-gray-900 dark:text-white w-12">${count}</span>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function updateRecentActivity(tasks) {
-            const container = document.getElementById('recent-activity');
-            const recentTasks = tasks
-                .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
-                .slice(0, 5);
-            
-            container.innerHTML = '';
-            
-            if (recentTasks.length === 0) {
-                container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-8">Nenhuma atividade recente</p>';
-                return;
-            }
-            
-            recentTasks.forEach(task => {
-                const timeAgo = getTimeAgo(new Date(task.updatedAt));
-                container.innerHTML += `
-                    <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                        <div class="text-2xl">${getSectorIcon(task.sector)}</div>
-                        <div class="flex-1">
-                            <p class="font-medium text-gray-900 dark:text-white">${task.title}</p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">${task.status} • ${timeAgo}</p>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function getTimeAgo(date) {
-            const now = new Date();
-            const diff = now - date;
-            const minutes = Math.floor(diff / 60000);
-            const hours = Math.floor(diff / 3600000);
-            const days = Math.floor(diff / 86400000);
-            
-            if (days > 0) return `${days}d atrás`;
-            if (hours > 0) return `${hours}h atrás`;
-            if (minutes > 0) return `${minutes}m atrás`;
-            return 'Agora';
-        }
-
-        // Team Functions
-        function setupTeamListener() {
-            db.collection('users')
-                .orderBy('name')
-                .onSnapshot((snapshot) => {
-                    const users = [];
-                    snapshot.forEach((doc) => {
-                        users.push({ id: doc.id, ...doc.data() });
-                    });
-                    loadTeam(users);
-                });
-        }
-
-        function loadTeam(users) {
-            const container = document.getElementById('team-container');
-            const teamCount = document.getElementById('team-count');
-            
-            container.innerHTML = '';
-            teamCount.textContent = `${users.length} ${users.length === 1 ? 'membro' : 'membros'}`;
-            
-            if (users.length === 0) {
-                container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-8">Nenhum membro na equipe</p>';
-                return;
-            }
-            
-            users.forEach(member => {
-                container.innerHTML += `
-                    <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                                ${member.avatar}
-                            </div>
-                            <div>
-                                <div class="flex items-center space-x-2">
-                                    <p class="font-medium text-gray-900 dark:text-white">${member.name}</p>
-                                    ${member.isAdmin ? '<span class="px-2 py-1 text-xs bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-full">ADM</span>' : ''}
-                                </div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">${member.role}</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <span class="w-3 h-3 rounded-full ${member.online ? 'bg-green-500' : 'bg-gray-400'}"></span>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">${member.online ? 'Online' : 'Offline'}</span>
-                            ${currentUserData.isAdmin && member.id !== currentUser.uid ? `
-                                <div class="flex space-x-2">
-                                    <button onclick="toggleAdmin('${member.id}')" class="text-xs px-2 py-1 rounded ${member.isAdmin ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'}">
-                                        ${member.isAdmin ? 'Remover ADM' : 'Promover ADM'}
-                                    </button>
-                                </div>
-                            ` : ''}
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function toggleAdmin(userId) {
-            if (!currentUserData.isAdmin) {
-                showNotification('Apenas administradores podem gerenciar permissões!', 'error');
-                return;
-            }
-            
-            db.collection('users').doc(userId).get()
-                .then((doc) => {
-                    const currentAdminStatus = doc.data().isAdmin;
-                    return db.collection('users').doc(userId).update({
-                        isAdmin: !currentAdminStatus
-                    });
-                })
-                .then(() => {
-                    showNotification('Permissões atualizadas!', 'success');
-                })
-                .catch((error) => {
-                    showNotification('Erro ao atualizar permissões: ' + error.message, 'error');
-                });
-        }
-
-        // Chat Functions
-        function setupChatListener() {
-            db.collection('messages')
-                .orderBy('timestamp', 'asc')
-                .onSnapshot((snapshot) => {
-                    const messages = [];
-                    snapshot.forEach((doc) => {
-                        messages.push({ id: doc.id, ...doc.data() });
-                    });
-                    loadMessages(messages);
-                });
-        }
-
-        function loadMessages(messages) {
-            const container = document.getElementById('messages-list');
-            container.innerHTML = '';
-            
-            if (messages.length === 0) {
-                container.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-8">Nenhuma mensagem ainda</p>';
-                return;
-            }
-            
-            messages.forEach(message => {
-                const isCurrentUser = message.userId === currentUser.uid;
-                container.innerHTML += `
-                    <div class="flex ${isCurrentUser ? 'justify-end' : 'justify-start'}">
-                        <div class="max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${isCurrentUser ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white'}">
-                            ${!isCurrentUser ? `<p class="text-xs font-semibold mb-1 opacity-75">${message.userName}</p>` : ''}
-                            <p class="text-sm">${message.message}</p>
-                            <p class="text-xs opacity-75 mt-1">${new Date(message.timestamp).toLocaleTimeString()}</p>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            // Scroll para a última mensagem
-            const chatContainer = document.getElementById('chat-messages');
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        function sendMessage(event) {
-            event.preventDefault();
-            
-            const input = document.getElementById('message-input');
-            const messageText = input.value.trim();
-            
-            if (messageText) {
-                const message = {
-                    userId: currentUser.uid,
-                    userName: currentUserData.name,
-                    message: messageText,
-                    timestamp: new Date().toISOString()
-                };
-                
-                db.collection('messages').add(message)
-                    .then(() => {
-                        input.value = '';
-                    })
-                    .catch((error) => {
-                        showNotification('Erro ao enviar mensagem: ' + error.message, 'error');
-                    });
-            }
-        }
-
-        // Settings Functions
-        function exportData() {
-            showNotification('Funcionalidade de exportação em desenvolvimento!', 'info');
+            showNotification(`Filtrando por: ${sector}`, 'info');
         }
 
         // Initialize Application
         function initializeApp() {
-            // Update user info in sidebar
-            document.getElementById('current-user-name').textContent = currentUserData.name;
-            document.getElementById('current-user-role').textContent = currentUserData.role;
-            document.getElementById('user-avatar').textContent = currentUserData.avatar;
-            
-            // Show/hide admin badge
-            const adminBadge = document.getElementById('admin-badge');
-            if (currentUserData.isAdmin) {
-                adminBadge.classList.remove('hidden');
-            } else {
-                adminBadge.classList.add('hidden');
+            if (currentUserData) {
+                document.getElementById('current-user-name').textContent = currentUserData.name;
+                document.getElementById('current-user-role').textContent = currentUserData.role;
+                document.getElementById('user-avatar').textContent = currentUserData.avatar;
+                
+                if (currentUserData.isAdmin) {
+                    document.getElementById('admin-badge').classList.remove('hidden');
+                }
             }
-            
-            // Setup all real-time listeners
-            setupDashboardListener();
-            setupTasksListener();
-            setupTeamListener();
-            setupChatListener();
         }
 
         // Auto login check
         auth.onAuthStateChanged((user) => {
             if (user) {
                 currentUser = user;
+                showNotification('Login automático realizado!', 'success');
                 
-                // Buscar dados do usuário
-                db.collection('users').doc(user.uid).get()
-                    .then((doc) => {
-                        if (doc.exists) {
-                            currentUserData = doc.data();
-                            
-                            document.getElementById('auth-screen').classList.add('hidden');
-                            document.getElementById('app').classList.remove('hidden');
-                            initializeApp();
-                        }
-                    });
+                document.getElementById('auth-screen').classList.add('hidden');
+                document.getElementById('app').classList.remove('hidden');
+                
+                // Dados simulados
+                currentUserData = {
+                    name: user.email.split('@')[0],
+                    role: 'Usuário',
+                    isAdmin: false,
+                    avatar: user.email.charAt(0).toUpperCase()
+                };
+                
+                initializeApp();
             }
         });
 
         // Event Listeners
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize with auth screen
-            document.getElementById('auth-screen').classList.remove('hidden');
-            document.getElementById('app').classList.add('hidden');
+            showLoginForm();
         });
+
+        // Teste do Firebase
+        console.log('Firebase config:', firebaseConfig);
     </script>
 </body>
 </html>
