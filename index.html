@@ -567,6 +567,37 @@
     messagingSenderId: "123456789012",
     appId: "1:123456789012:web:abcdef123456789"
 };
+        // Função para criar usuário admin inicial
+function createInitialAdmin() {
+    const adminEmail = 'Diegodiasskt8@gmail.com';
+    const adminPassword = '20080305Dp@';
+    
+    auth.createUserWithEmailAndPassword(adminEmail, adminPassword)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            
+            // Criar dados de admin no Firestore
+            return db.collection('users').doc(user.uid).set({
+                name: 'Administrador',
+                email: adminEmail,
+                role: 'Gerente de Logística',
+                isAdmin: true,
+                online: true,
+                avatar: 'A',
+                createdAt: new Date().toISOString(),
+                lastLogin: new Date().toISOString()
+            });
+        })
+        .then(() => {
+            console.log('Admin criado com sucesso!');
+        })
+        .catch((error) => {
+            console.log('Admin já existe ou erro:', error);
+        });
+}
+
+// Chamar esta função uma vez se precisar criar o admin
+// createInitialAdmin();
         // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
